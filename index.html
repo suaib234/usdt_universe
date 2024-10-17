@@ -85,13 +85,19 @@ input {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    overflow-x: auto; /* Allow horizontal scroll on small screens */
+    position: relative; /* Positioning for the fixed title */
 }
-footer {
-    margin-top: 40px;
+.transaction-history h2 {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
     padding: 10px;
-    background-color: #f5c400;
-    color: white;
+    z-index: 10;
+    border-bottom: 2px solid #f5c400;
+}
+.transaction-table-container {
+    overflow-x: auto; /* Allow horizontal scroll on small screens */
+    padding-bottom: 10px; /* Space for easier scroll */
 }
 .transaction-table {
     width: 100%;
@@ -134,6 +140,7 @@ footer {
         padding: 10px;
     }
 }
+
     </style>
 </head>
 <body>
