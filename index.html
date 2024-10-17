@@ -13,7 +13,7 @@
             color: #333;
             text-align: center;
         }
-            @media only screen and (max-width: 768px){
+         @media only screen and (max-width: 768px){
             html,
             body{
                 width: 100%;
@@ -36,7 +36,8 @@
         }
         .prices {
             display: flex;
-            justify-content: space-around;
+            flex-wrap: wrap; /* Allow wrapping */
+            justify-content: space-around; /* Center boxes */
             margin-top: 30px;
         }
         .price-box {
@@ -46,7 +47,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin: 10px;
+            margin: 10px; /* Space between boxes */
         }
         .price-box h2 {
             margin: 0;
@@ -65,11 +66,12 @@
             font-size: 1rem;
             display: inline-block;
             margin-top: 10px;
+            width: 100%; /* Full-width buttons */
         }
         input {
             padding: 10px;
             margin-top: 10px;
-            width: 80%;
+            width: 100%; /* Full-width input fields */
             font-size: 1rem;
         }
         .transaction-history {
@@ -97,6 +99,25 @@
         .transaction-table th {
             background-color: #f5c400;
             color: white;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem; /* Reduce header size on small screens */
+            }
+
+            .btn {
+                font-size: 0.9rem; /* Smaller buttons on small screens */
+            }
+
+            .price-box h2 {
+                font-size: 1.2rem; /* Smaller titles on small screens */
+            }
+
+            .price-box p, label {
+                font-size: 1rem; /* Smaller text on small screens */
+            }
         }
     </style>
 </head>
