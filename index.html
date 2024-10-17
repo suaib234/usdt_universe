@@ -160,11 +160,11 @@ function renderTransactions() {
     transactions.slice(0, 5).forEach(transaction => { // Show only the latest 5 transactions
         const row = document.createElement('tr');
         let actionButtons = `
-            <button onclick="changeStatus('${transaction.orderNumber}', 'Completed')">Complete</button>`;
+            <button onclick="changeStatus('${transaction.orderNumber}', 'Good Experience')">Good</button>`;
 
         if (isAdmin) {
             actionButtons += `
-            <button onclick="changeStatus('${transaction.orderNumber}', 'Cancelled')">Cancel</button>`;
+            <button onclick="changeStatus('${transaction.orderNumber}', 'Bad Experience')">Bad</button>`;
         }
 
         row.innerHTML = `
