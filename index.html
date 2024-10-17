@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USDT_UNIVERSE - P2P Trading</title>
     <style>
-        body {
+       body {
             background-color: #FFD700;
             font-family: Arial, sans-serif;
             margin: 0;
@@ -35,7 +35,7 @@
             font-size: 2.5rem;
         }
         .prices {
-            isplay: flex;
+            display: flex;
             flex-wrap: wrap; /* Allow wrapping */
             justify-content: space-around; /* Center boxes */
             margin-top: 30px;
@@ -47,7 +47,6 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-collapse: collapse;
             margin: 10px; /* Space between boxes */
         }
         .price-box h2 {
@@ -100,6 +99,25 @@
         .transaction-table th {
             background-color: #f5c400;
             color: white;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem; /* Reduce header size on small screens */
+            }
+
+            .btn {
+                font-size: 0.9rem; /* Smaller buttons on small screens */
+            }
+
+            .price-box h2 {
+                font-size: 1.2rem; /* Smaller titles on small screens */
+            }
+
+            .price-box p, label {
+                font-size: 1rem; /* Smaller text on small screens */
+            }
         }
     </style>
 </head>
