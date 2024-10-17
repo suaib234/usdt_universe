@@ -13,7 +13,7 @@
             color: #333;
             text-align: center;
         }
-         @media only screen and (max-width: 768px){
+        @media only screen and (max-width: 768px){
             html,
             body{
                 width: 100%;
@@ -36,18 +36,15 @@
         }
         .prices {
             display: flex;
-            flex-wrap: wrap; /* Allow wrapping */
-            justify-content: space-around; /* Center boxes */
+            justify-content: space-around;
             margin-top: 30px;
         }
         .price-box {
-            width: 90%; /* Use responsive width */
-            max-width: 400px; /* Optional: Set a max width */
+            width: 40%;
             background-color: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin: 10px; /* Space between boxes */
         }
         .price-box h2 {
             margin: 0;
@@ -66,12 +63,11 @@
             font-size: 1rem;
             display: inline-block;
             margin-top: 10px;
-            width: 100%; /* Full-width buttons */
         }
         input {
             padding: 10px;
             margin-top: 10px;
-            width: 100%; /* Full-width input fields */
+            width: 80%;
             font-size: 1rem;
         }
         .transaction-history {
@@ -171,11 +167,11 @@ function renderTransactions() {
     transactions.slice(0, 5).forEach(transaction => { // Show only the latest 5 transactions
         const row = document.createElement('tr');
         let actionButtons = `
-            <button onclick="changeStatus('${transaction.orderNumber}', 'Good Experience')">Good</button>`;
+            <button onclick="changeStatus('${transaction.orderNumber}', 'Completed')">Complete</button>`;
 
         if (isAdmin) {
             actionButtons += `
-            <button onclick="changeStatus('${transaction.orderNumber}', 'Bad Experience')">Bad</button>`;
+            <button onclick="changeStatus('${transaction.orderNumber}', 'Cancelled')">Cancel</button>`;
         }
 
         row.innerHTML = `
@@ -234,7 +230,7 @@ function buyUSDT() {
         alert("Please provide the Transaction ID.");
     }
 } else {
-    alert("Invalid amount or UID");
+    alert("Please enter an amount between 100 and 25,000 BDT and Binance UID.");
 }
 
 }
@@ -263,7 +259,7 @@ function sellUSDT() {
             alert("Please provide your Binance username.");
         }
     } else {
-        alert("Invalid amount or Bkash Number");
+        alert("Please enter an amount between 100 and 25,000 BDT and provide a valid Bkash number.");
     }
 }
 
