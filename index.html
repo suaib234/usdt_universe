@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USDT_UNIVERSE - P2P Trading</title>
+    <style>
+        body {
+            background-color: #FFD700;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            text-align: center;
+        }
+        header {
+            padding: 20px;
+            background-color: #f5c400;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        .prices {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping */
+            justify-content: space-around; /* Center boxes */
+            margin-top: 30px;
+        }
+        .price-box {
+            width: 45%; /* Adjust width for desktop */
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 10px; /* Space between boxes */
+            transition: transform 0.2s; /* Smooth hover effect */
+        }
+        .price-box:hover {
+            transform: scale(1.02); /* Slight zoom on hover */
+        }
+        .price-box h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #444;
+        }
+        .price-box p, label {
+            font-size: 1.2rem;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            display: inline-block;
+            margin-top: 10px;
+            width: 100%; /* Full-width buttons */
+        }
+        input {
+            padding: 10px;
+            margin-top: 10px;
+            width: 100%; /* Full-width input fields */
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px; /* Rounded corners */
+        }
+        .transaction-history {
+            margin-top: 40px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        footer {
+            margin-top: 40px;
+            padding: 10px;
+            background-color: #f5c400;
+            color: white;
+        }
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .transaction-table th, .transaction-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .transaction-table th {
+            background-color: #f5c400;
+            color: white;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem; /* Reduce header size on small screens */
+            }
+
+            .btn {
+                font-size: 0.9rem; /* Smaller buttons on small screens */
+            }
+
+            .price-box {
+                width: 90%; /* Full width on small screens */
+            }
+
+            .price-box h2 {
+                font-size: 1.2rem; /* Smaller titles on small screens */
+            }
+
+            .price-box p, label {
+                font-size: 1rem; /* Smaller text on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>USDT_UNIVERSE</h1>
+    <p>Your trusted Verified P2P Merchant</p>
+</header>
+
+<div class="container">
+    <div class="prices">
+        <div class="price-box" id="buy-section">
+            <h2>Buy USDT</h2>
+            <p>Price: 125 BDT</p>
+            <p>Payment Method: bKash</p>
+            <label for="buy-amount"></label>
+            <input type="text" id="buy-amount" placeholder="Enter amount in BDT (min 100, max 25000)">
+            <input type="text" id="buyeruid" placeholder="Enter Binance UID.">
+            <button class="btn" onclick="buyUSDT()">Buy Now</button>
+        </div>
+
+        <div class="price-box" id="sell-section">
+            <h2>Sell USDT</h2>
+            <p>Price: 124 BDT</p>
+            <p>Payment Method: bKash</p>
+            <label for="sell-amount"></label>
+            <input type="text" id="sell-amount" placeholder="Enter amount in BDT (min 100, max 25000)">
+            <label for="sell-number"></label>
+            <input type="text" id="sell-number" placeholder="Enter your Bkash number.">
+            <button class="btn" onclick="sellUSDT()">Sell Now</button>
+        </div>
+    </div>
+
+    <div class="transaction-history">
+        <h2>Latest Transactions</h2>
+        <table class="transaction-table">
+            <thead>
+                <tr>
+                    <th>Order Number</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="transaction-list">
+                <!-- Transactions will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer>
+    <p>© 2024 USDT_UNIVERSE | Powered by P2P Trading</p>
+</footer>
+
+<script>
+// Sample variable to check if the user is an admin (replace with actual admin authentication logic)
+let isAdmin = true;
+
+// Fetch transactions from local storage or initialize empty array
+let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+// Function to render transaction history (shows the latest 5 transactions)
+function renderTransactions() {
+    const transactionList = document.getElementById('transaction-list');
+    transactionList.innerHTML = ''; // Clear the list
+
+    transactions.slice(0, 5).forEach(transaction => { // Show only the latest 5 transactions
+        const row = document.createElement('tr');
+        let actionButtons = `
+            <button onclick="changeStatus('${transaction.orderNumber}', 'Completed')">Complete</button>`;
+
+        if (isAdmin) {
+            actionButtons += `
+            <button onclick="changeStatus('${transaction.orderNumber}', 'Cancelled')">Cancel</button>`;
+        }
+
+        row.innerHTML = `
+            <td>${transaction.orderNumber}</td>
+            <td>${transaction.type}</td>
+            <td>${transaction.amount}</td>
+            <td>${transaction.status}</td>
+            <td>${actionButtons}</td>
+        `;
+        transactionList.appendChild(row);
+    });
+}
+
+// Function to change transaction status
+function changeStatus(orderNumber, newStatus) {
+    const transaction = transactions.find(t => t.orderNumber === orderNumber);
+    if (transaction) {
+        transaction.status = newStatus; // Update the status to Completed or Cancelled
+        localStorage.setItem('transactions', JSON.stringify(transactions)); // Save to local storage
+        sendToTelegram(`Transaction ${orderNumber} ${newStatus.toLowerCase()}.`); // Send update to Telegram
+        renderTransactions(); // Re-render transactions to reflect the update
+        alert(`Transaction ${orderNumber} marked as ${newStatus}.`);
+    } else {
+        alert("Transaction not found.");
+    }
+}
+
+// Function to generate a unique order number
+function generateOrderNumber() {
+    return 'ORD' + Math.floor(Math.random() * 1000000); // Example: ORD123456
+}
+
+// Function to simulate buying USDT
+function buyUSDT() {
+    const amount = document.getElementById('buy-amount').value;
+    const uid = document.getElementById('buyeruid').value;
+
+    if (amount >= 100 && amount <= 25000 && uid) {
+        const paymentnum = "01940686844"; // Simulated Pay NUM
+        const buyamount = (amount / 125).toFixed(3); // Convert and format to 4 decimals
+        const transactionId = prompt(`USDT Amount: ${buyamount}\nFiat amount: ${amount}\nbKash Personal: ${paymentnum} \nEnter the Transaction ID after Payment:`);
+
+        if (transactionId) {
+            const orderNumber = generateOrderNumber();
+            alert(`Order Number: ${orderNumber}. Send ${amount} BDT to bKash number ${paymentnum}. Transaction ID: ${transactionId}. Binance UID: ${uid}. USDT Amount: ${buyamount}. Your transaction will be completed within 15 minutes.`);
+
+            // Send data to admin via Telegram bot
+            sendToTelegram(`Buy Request: Order Number: ${orderNumber}, Amount: ${amount} BDT, Transaction ID: ${transactionId}, UID: ${uid}, Buy Amount: ${buyamount} USDT`);
+
+            // Store the transaction in local storage
+            transactions.push({
+                orderNumber: orderNumber,
+                type: 'Buy',
+                amount: `${buyamount} USDT`,
+                status: 'Pending'
+            });
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+            renderTransactions();
+        }
+    } else {
+        alert("Invalid amount or UID.");
+    }
+}
+
+// Function to simulate selling USDT
+function sellUSDT() {
+    const amount = document.getElementById('sell-amount').value;
+    const bkashNumber = document.getElementById('sell-number').value;
+
+    if (amount >= 100 && amount <= 25000 && bkashNumber) {
+        const sellAmount = (amount * 124).toFixed(3); // Convert and format to 4 decimals
+        const orderNumber = generateOrderNumber();
+        alert(`Order Number: ${orderNumber}. Send ${sellAmount} BDT to bKash number ${bkashNumber}. Your transaction will be completed within 15 minutes.`);
+
+        // Send data to admin via Telegram bot
+        sendToTelegram(`Sell Request: Order Number: ${orderNumber}, Amount: ${amount} BDT, Bkash Number: ${bkashNumber}, Sell Amount: ${sellAmount} BDT`);
+
+        // Store the transaction in local storage
+        transactions.push({
+            orderNumber: orderNumber,
+            type: 'Sell',
+            amount: `${amount} BDT`,
+            status: 'Pending'
+        });
+        localStorage.setItem('transactions', JSON.stringify(transactions));
+        renderTransactions();
+    } else {
+        alert("Invalid amount or Bkash number.");
+    }
+}
+
+// Function to send message to Telegram bot
+function sendToTelegram(message) {
+    const token = "7470050843:AAFJxFwymU_gOEUl_OoUzX5XZMTcjfn4MKs"; // Replace with your bot token
+    const chatId = "7336187449"; // Replace with your chat ID
+    const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => console.log('Telegram response:', data))
+        .catch(error => console.error('Error sending to Telegram:', error));
+}
+
+// Initial render
+renderTransactions();
+</script>
+</body>
+</html>
