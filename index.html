@@ -12,7 +12,7 @@
                 overflow-x: hidden;
             }
         }
-     body {
+    body {
     background-color: #FFD700;
     font-family: Arial, sans-serif;
     margin: 0;
@@ -20,50 +20,46 @@
     color: #333;
     text-align: center;
 }
-
 header {
     padding: 20px;
     background-color: #f5c400;
     color: white;
 }
-
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
-
 h1 {
     margin: 0;
     font-size: 2.5rem;
 }
-
 .prices {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-wrap: wrap; /* Allow wrapping */
+    justify-content: space-around; /* Center boxes */
     margin-top: 30px;
 }
-
 .price-box {
-    width: 40%;
+    width: 45%; /* Adjust width for desktop */
     background-color: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 10px 0;
+    margin: 10px; /* Space between boxes */
+    transition: transform 0.2s; /* Smooth hover effect */
 }
-
+.price-box:hover {
+    transform: scale(1.02); /* Slight zoom on hover */
+}
 .price-box h2 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: #444;
 }
-
 .price-box p, label {
     font-size: 1.2rem;
 }
-
 .btn {
     padding: 10px 20px;
     background-color: #28a745;
@@ -73,71 +69,78 @@ h1 {
     font-size: 1rem;
     display: inline-block;
     margin-top: 10px;
+    width: 100%; /* Full-width buttons */
 }
-
 input {
     padding: 10px;
     margin-top: 10px;
-    width: 80%;
+    width: 90%; /* Full-width input fields */
     font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px; /* Rounded corners */
 }
-
 .transaction-history {
     margin-top: 40px;
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    overflow-x: auto; /* Added for horizontal scrolling */
+    position: relative; /* Positioning for the fixed title */
 }
-
 .transaction-history h2 {
     position: sticky;
     top: 0;
     background-color: #fff;
     padding: 10px;
-    border-radius: 10px 10px 0 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 2;
+    z-index: 10;
+    border-bottom: 2px solid #f5c400;
 }
-
+.transaction-table-container {
+    overflow-x: auto; /* Allow horizontal scroll on small screens */
+    padding-bottom: 10px; /* Space for easier scroll */
+}
 .transaction-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
-    font-size: 0.9rem; /* Reduced font size */
+    min-width: 600px; /* Ensure table isn't too small */
 }
-
 .transaction-table th, .transaction-table td {
-    padding: 8px; /* Reduced padding */
+    padding: 10px;
     border: 1px solid #ddd;
-    text-align: center;
 }
-
 .transaction-table th {
     background-color: #f5c400;
     color: white;
 }
 
-.transaction-table td {
-    word-wrap: break-word;
-}
+/* Media Queries for Responsiveness */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem; /* Reduce header size on small screens */
+    }
 
-@media (max-width: 768px) {
-    .prices {
-        flex-direction: column;
+    .btn {
+        font-size: 0.9rem; /* Smaller buttons on small screens */
     }
 
     .price-box {
-        width: 90%;
-        margin: 10px auto;
+        width: 90%; /* Full width on small screens */
     }
 
-    .transaction-table td, .transaction-table th {
-        font-size: 0.8rem; /* Further reduced font size */
-        padding: 6px; /* Reduced padding */
+    .price-box h2 {
+        font-size: 1.2rem; /* Smaller titles on small screens */
+    }
+
+    .price-box p, label {
+        font-size: 1rem; /* Smaller text on small screens */
+    }
+
+    .transaction-history {
+        padding: 10px;
     }
 }
+
     </style>
 </head>
 <body>
@@ -172,7 +175,8 @@ input {
     </div>
 
     <div class="transaction-history">
-        <h2>Latest Transactions</h2>
+    <h2>Latest Transactions</h2>
+    <div class="transaction-table-container">
         <table class="transaction-table">
             <thead>
                 <tr>
