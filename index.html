@@ -193,7 +193,7 @@ input {
 
         <div class="price-box" id="sell-section">
             <h2>Sell USDT</h2>
-            <p>Price: 125.5 BDT</p>
+            <p>Price: 125.8 BDT</p>
             <p>Payment Method: bKash</p>
             <label for="sell-amount"></label>
             <input type="text" id="sell-amount" placeholder="Amount in BDT(min 200, max 25000)">
@@ -316,8 +316,8 @@ function sellUSDT() {
     const phoneNumber = document.getElementById('sell-number').value;
 
     if (amount >= 200 && amount <= 25000 && phoneNumber) {
-        const payId = "381708404"; // Simulated Pay ID
-         const sellamount = (amount / 125.5).toFixed(3); // Convert and format to 4 decimals
+        const payId = "381708407"; // Simulated Pay ID
+         const sellamount = (amount / 125.8).toFixed(3); // Convert and format to 4 decimals
         const binanceUsername = prompt(`USDT Amount: ${sellamount}\nFiat amount: ${amount}\nPay ID is: ${payId}\nAfter sent USDT enter your Binance username:`);
 
         if (binanceUsername) {
